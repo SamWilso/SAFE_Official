@@ -1,2 +1,4 @@
 # SAFE: Sensitivity-Aware Features for Out-of-Distribution Object Detection
-This repository is still under construction, please check back closer to the date of ICCV 2023.
+
+Due to significant events occuring in the personal and professional life of the first author of SAFE, this repository has been delayed.
+The code will be released within the next month. Thank you for your patience.
