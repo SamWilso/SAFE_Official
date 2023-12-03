@@ -28,30 +28,31 @@ Please ensure that the vos_detr environment is active before attempting to run t
 ## Datasets
 The location of the datasets is flexible with the use of the *--dataset-dir* argument. For dataset structure, SAFE assumes that all datasets are contained within the directory defined by the *--dataset-dir* argument. Please refer to the steps in the [VOS repository](https://github.com/deeplearning-wisc/vos) in order to acquire the datasets. Upon completion of these steps, your *--dataset-dir* directory should have the following structure:
 <br>
-    └── DATASET_DIR
-        └── VOC_0712_converted
-            |
-            ├── JPEGImages
-            ├── voc0712_train_all.json
-            └── val_coco_format.json
-        └── COCO
-            |
-            ├── annotations
-                ├── xxx.json (the original json files)
-                ├── instances_val2017_ood_wrt_bdd_rm_overlap.json
-                └── instances_val2017_ood_rm_overlap.json
-            ├── train2017
-            └── val2017
-        └── bdd100k
-            |
-            ├── images
-            ├── val_bdd_converted.json
-            └── train_bdd_converted.json
-        └── OpenImages
-            |
-            ├── coco_classes
-            └── ood_classes_rm_overlap
-
+```
+└── DATASET_DIR
+	└── VOC_0712_converted
+		|
+		├── JPEGImages
+		├── voc0712_train_all.json
+		└── val_coco_format.json
+	└── COCO
+		|
+		├── annotations
+			├── xxx.json (the original json files)
+			├── instances_val2017_ood_wrt_bdd_rm_overlap.json
+			└── instances_val2017_ood_rm_overlap.json
+		├── train2017
+		└── val2017
+	└── bdd100k
+		|
+		├── images
+		├── val_bdd_converted.json
+		└── train_bdd_converted.json
+	└── OpenImages
+		|
+		├── coco_classes
+		└── ood_classes_rm_overlap
+```
 
 ## Base Object Detectors
 SAFE does not apply modifications to the base network, neither during training nor inference. Thus, this repository does not support training of new object detectors. Please refer to the [VOS repository](https://github.com/deeplearning-wisc/vos) for instructions on training base object detector networks. 
@@ -62,12 +63,12 @@ In order to use the pretrained models, move the model to the directory with the 
 
 For the RCNN models from the VOS repository:
 ```bash
-mv path/to/weights/file.pth SAFE_ROOT/data/{VOC\|BDD}-Detection/faster-rcnn/{regnetx_}vanilla/model_final.pth
+mv path/to/weights/file.pth SAFE_ROOT/data/{VOC|BDD}-Detection/faster-rcnn/{regnetx_}vanilla/model_final.pth
 ```
 
 For the DETR models from the SIREN repository:
 ```bash
-mv path/to/weights/file.pth SAFE_ROOT/ckpts/detr/checkpoint_{voc\|bdd}_vanilla.pth
+mv path/to/weights/file.pth SAFE_ROOT/ckpts/detr/checkpoint_{voc|bdd}_vanilla.pth
 ```
 
 ## Feature Extraction
@@ -79,29 +80,29 @@ To start feature extraction on either of the training datasets, ensure you are i
 ```bash
 python SAFE_interface.py 
 --task extract
---variant {RCNN\|DETR}
---bbone {RN50\|RGX4}
---tdset {VOC\|BDD}
+--variant {RCNN|DETR}
+--bbone {RN50|RGX4}
+--tdset {VOC|BDD}
 --dataset-dir path/to/data/dir
 --transform-weight {integer}
 ```
-"variant" selects the object detector architecture. Can be either "RCNN" or "DETR".
-"bbone" defines the backbone model architecture. Can be either "RN50" (ResNet50) or "RGX4" (RegNetX4.0). Ignored if "variant" is set to "DETR".
-"tdset" defines the target ID dataset. Can be either "VOC" or "BDD".
-"transform-weight" modifies the epsilon value for the adversarial perturbation. Defaults to 8. 
+*"variant"* selects the object detector architecture. Can be either "RCNN" or "DETR". <br>
+*"bbone"* defines the backbone model architecture. Can be either "RN50" (ResNet50) or "RGX4" (RegNetX4.0). Ignored if "variant" is set to "DETR". <br>
+*"tdset"* defines the target ID dataset. Can be either "VOC" or "BDD". <br>
+*"transform-weight"* modifies the epsilon value for the adversarial perturbation. Defaults to 8. <br>
 
 Upon completion of the script, a new folder named "safe" will appear in your **--dataset-dir** directory containing the hdf5 files of the extracted features. 
 
-**Note!** To avoid accidental "training-on-test" errors, this repository disallows feature extraction on the OOD or ID testing datasets.
+**Note:** To avoid accidental "training-on-test" errors, this repository disallows feature extraction on the OOD or ID testing datasets.
 
 ## SAFE Training
 Once feature extraction has been completed, a SAFE meta-classifier can be trained by running:
 ```bash
 python SAFE_interface.py 
 --task train
---variant {RCNN\|DETR}
---bbone {RN50\|RGX4}
---tdset {VOC\|BDD}
+--variant {RCNN|DETR}
+--bbone {RN50|RGX4}
+--tdset {VOC|BDD}
 --dataset-dir path/to/data/dir
 --transform-weight {1-255}
 ```
@@ -112,28 +113,28 @@ Finally, to evaluate the newly-trained SAFE MLP run:
 ```bash
 python SAFE_interface.py 
 --task train
---variant {RCNN\|DETR}
---bbone {RN50\|RGX4}
---tdset {VOC\|BDD}
+--variant {RCNN|DETR}
+--bbone {RN50|RGX4}
+--tdset {VOC|BDD}
 --dataset-dir path/to/data/dir
 --mlp-path path/to/mlp.pth
 ```
 
 The evaluation metrics will be displayed in the terminal once all datasets have been processed. 
 
-We provide a set of pretrained [SAFE models]() and [minimalist datasets]() for those just wanting to get started. Once downloaded, extract the SAFE models into the "ckpts" directory and the hdf5 datasets to the "safe" directory within **--dataset-dir**.The evaluation can then be run as normal by following the instructions above.
+We provide a set of pretrained [SAFE models]() and [minimalist datasets]() for those just wanting to get started. Once downloaded, extract the SAFE models into the "ckpts" directory and the hdf5 datasets to the "safe" directory within **--dataset-dir**. The evaluation can then be run as normal by following the instructions above.
 
 ## Citation ##
 
 If you find this work useful, please consider citing:
 ```text
 @InProceedings{Wilson_2023_ICCV,
-    author    = {Wilson, Samuel and Fischer, Tobias and Dayoub, Feras and Miller, Dimity and S\"underhauf, Niko},
-    title     = {SAFE: Sensitivity-Aware Features for Out-of-Distribution Object Detection},
-    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
-    month     = {October},
-    year      = {2023},
-    pages     = {23565-23576}
+	author    = {Wilson, Samuel and Fischer, Tobias and Dayoub, Feras and Miller, Dimity and S\"underhauf, Niko},
+	title     = {SAFE: Sensitivity-Aware Features for Out-of-Distribution Object Detection},
+	booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+	month     = {October},
+	year      = {2023},
+	pages     = {23565-23576}
 }
 ```
 
