@@ -122,7 +122,7 @@ python SAFE_interface.py
 
 The evaluation metrics will be displayed in the terminal once all datasets have been processed. 
 
-We provide a set of pretrained [SAFE models]() and [minimalist datasets]() for those just wanting to get started. Once downloaded, extract the SAFE models into the "ckpts" directory and the hdf5 datasets to the "safe" directory within **--dataset-dir**. The evaluation can then be run as normal by following the instructions above.
+We provide a set of pretrained [SAFE models](https://drive.google.com/file/d/173LOl87UDss2DHDUb9c1GojEuQlN7rXt/view?usp=sharing) and [minimalist datasets](https://drive.google.com/file/d/1qnkjJR6GzC8EL3mKhYLXrHzVD8gA1KQ6/view?usp=sharing) for those just wanting to get started. Once downloaded, extract the SAFE models into the "ckpts" directory and the hdf5 datasets to the "safe" directory within **--dataset-dir**. The evaluation can then be run as normal by following the instructions above.
 
 ## Citation ##
 
