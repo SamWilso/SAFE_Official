@@ -112,7 +112,7 @@ Please ensure that all the arguments passed (excluding "task") in the previous s
 Finally, to evaluate the newly-trained SAFE MLP run:
 ```bash
 python SAFE_interface.py 
---task train
+--task eval
 --variant {RCNN|DETR}
 --bbone {RN50|RGX4}
 --tdset {VOC|BDD}
